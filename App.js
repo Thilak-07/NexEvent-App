@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
@@ -45,6 +46,11 @@ const App = () => {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen
+                    name="Register"
+                    component={RegisterScreen}
+                    options={{ title: "Create Account" }}
+                />
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}

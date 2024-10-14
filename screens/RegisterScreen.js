@@ -1,4 +1,4 @@
-// screens/LoginScreen.js
+// screens/RegisterScreen.js
 import React, { useState } from "react";
 import {
     View,
@@ -10,40 +10,73 @@ import {
     ActivityIndicator,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { loginUser } from "../services/authService";
+import { loginUser, registerUser } from "../services/authService";
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [usernameFocused, setUsernameFocused] = useState(false);
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
+    const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-    const handleLogin = async () => {
+    const handleRegister = async () => {
         setLoading(true);
-        if (email == "test@example.com" && password == "admin") {
-            navigation.navigate("Home");
+        if (password !== confirmPassword) {
+            Alert.alert("Error", "Passwords do not match");
             setLoading(false);
-        } else {
-            try {
-                const user = await loginUser(email, password);
-                if (user) {
-                    navigation.navigate("Home");
-                }
-            } catch (error) {
-                Alert.alert("Login Failed", "Invalid credentials");
-            } finally {
-                setLoading(false);
+            return;
+        }
+
+        try {
+            await registerUser(username, email, password);
+            Alert.alert("Success", "Registration successful");
+            const user = await loginUser(email, password);
+            if (user) {
+                navigation.navigate("Home");
             }
+        } catch (error) {
+            Alert.alert(
+                "Registration Failed",
+                "An error occurred during registration"
+            );
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <View style={styles.container}>
             <Text style={styles.appTitle}>NexEvent</Text>
-            <Text style={styles.title}>Login</Text>
+            <Text style={styles.title}>Register</Text>
             <View style={styles.box}>
+                <Text style={styles.label}>Username</Text>
+                <View
+                    style={[
+                        styles.inputContainer,
+                        usernameFocused && styles.inputFocused,
+                    ]}
+                >
+                    <MaterialIcons
+                        name="person"
+                        size={24}
+                        color="#ccc"
+                        style={styles.icon}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter your username"
+                        value={username}
+                        onChangeText={setUsername}
+                        onFocus={() => setUsernameFocused(true)}
+                        onBlur={() => setUsernameFocused(false)}
+                    />
+                </View>
                 <Text style={styles.label}>Email</Text>
                 <View
                     style={[
@@ -106,28 +139,61 @@ const LoginScreen = ({ navigation }) => {
                         />
                     </TouchableOpacity>
                 </View>
+                <Text style={styles.label}>Confirm Password</Text>
+                <View
+                    style={[
+                        styles.inputContainer,
+                        confirmPasswordFocused && styles.inputFocused,
+                    ]}
+                >
+                    <MaterialIcons
+                        name="lock"
+                        size={24}
+                        color="#ccc"
+                        style={styles.icon}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirm your password"
+                        secureTextEntry={!confirmPasswordVisible}
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        onFocus={() => setConfirmPasswordFocused(true)}
+                        onBlur={() => setConfirmPasswordFocused(false)}
+                    />
+                    <TouchableOpacity
+                        onPress={() =>
+                            setConfirmPasswordVisible(!confirmPasswordVisible)
+                        }
+                    >
+                        <MaterialIcons
+                            name={
+                                confirmPasswordVisible
+                                    ? "visibility-off"
+                                    : "visibility"
+                            }
+                            size={24}
+                            color="#007bff"
+                        />
+                    </TouchableOpacity>
+                </View>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={handleLogin}
+                    onPress={handleRegister}
                     disabled={loading}
                 >
                     {loading ? (
                         <ActivityIndicator size="small" color="#fff" />
                     ) : (
-                        <Text style={styles.buttonText}>Login</Text>
+                        <Text style={styles.buttonText}>Register</Text>
                     )}
                 </TouchableOpacity>
             </View>
             <View style={styles.linksContainer}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate("Register")}
-                >
-                    <Text style={styles.linkText}>
-                        New to NexEvent? Create an account
-                    </Text>
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                    <Text style={styles.linkText}>Forgot Password?</Text>
+                    <Text style={styles.linkText}>
+                        Already have an account? Login
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -212,4 +278,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginScreen;
+export default RegisterScreen;

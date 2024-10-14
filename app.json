@@ -1,44 +1,42 @@
 {
-  "expo": {
-    "name": "NexEvent-App",
-    "slug": "NexEvent-App",
-    "version": "1.0.0",
-    "jsEngine": "hermes",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.thilakkumar.NexEventApp"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.thilakkumar.NexEventApp",
-      "permissions": [
-        "INTERNET"
-      ]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "50660d03-e4fc-4d44-b4b5-1a2b133be14f"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/50660d03-e4fc-4d44-b4b5-1a2b133be14f"
+    "expo": {
+        "name": "NexEvent-App",
+        "slug": "NexEvent-App",
+        "version": "1.0.0",
+        "jsEngine": "hermes",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.thilakkumar.NexEventApp"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.thilakkumar.NexEventApp",
+            "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"]
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "50660d03-e4fc-4d44-b4b5-1a2b133be14f"
+            }
+        },
+        "runtimeVersion": {
+            "policy": "appVersion"
+        },
+        "updates": {
+            "url": "https://u.expo.dev/50660d03-e4fc-4d44-b4b5-1a2b133be14f"
+        }
     }
-  }
 }
