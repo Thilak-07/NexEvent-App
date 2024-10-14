@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
+import EventDetailsScreen from "./screens/EventDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -44,7 +45,7 @@ const App = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Login">
+            <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen
                     name="Register"
@@ -65,6 +66,11 @@ const App = () => {
                             />
                         ),
                     })}
+                />
+                <Stack.Screen
+                    name="EventDetails"
+                    component={EventDetailsScreen}
+                    options={{ title: "Event Details" }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

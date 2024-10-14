@@ -8,6 +8,7 @@ import {
     FlatList,
     Alert,
     ActivityIndicator,
+    TouchableOpacity,
 } from "react-native";
 import apiClient from "../services/apiClient";
 
@@ -21,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
                 const response = await apiClient.get("/events/");
                 setEvents(response.data);
             } catch (error) {
-                Alert.alert("Failed to fetch events:", error);
+                Alert.alert("Failed to fetch events:", error.message);
             } finally {
                 setLoading(false);
             }
@@ -31,12 +32,21 @@ const HomeScreen = ({ navigation }) => {
     }, []);
 
     const renderEventCard = ({ item }) => (
-        <View style={styles.card}>
-            <Image source={{ uri: item.feature_image }} style={styles.image} />
-            <Text style={styles.date}>{formatDate(item.date_time)}</Text>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.location}>{item.location}</Text>
-        </View>
+        <TouchableOpacity
+            onPress={() =>
+                navigation.navigate("EventDetails", { eventId: item.id })
+            }
+        >
+            <View style={styles.card}>
+                <Image
+                    source={{ uri: item.feature_image }}
+                    style={styles.image}
+                />
+                <Text style={styles.date}>{formatDate(item.date_time)}</Text>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.location}>{item.location}</Text>
+            </View>
+        </TouchableOpacity>
     );
 
     const formatDate = (dateString) => {
